@@ -3,42 +3,50 @@ from django.urls import reverse
 from django.http  import HttpResponse,JsonResponse
 import json
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from .models import Movies
 
 
 @ensure_csrf_cookie
+@login_required
 def movies_view(request):
 
     if request.method == 'GET':
           movies = Movies.objects.all()
           
-          data = []
+          result = []
           for movie in movies:              
-                data.append({
+                result.append({
                       "id" : movie.id,
                       "title" : movie.title,
                       "description" : movie.description,
                       "poster" : request.build_absolute_uri(movie.poster.url) if movie.poster else None,
-                      "release_date" : movie.release_date
+                      "release_date" : movie.release_date,
+                      "rating": movie.rating,
+                      "language" : movie.language,
+                      "duration" : movie.duration
                 })
-          return JsonResponse({"data" : data } )
+          return JsonResponse({"data" : result } )
     
     elif request.method == 'POST':    
             if not request.user.is_staff:
-                return JsonResponse({"message" : "Audience cannot ADD movies"})        
+                return JsonResponse({"message" : "You don't have access to ADD movies"})        
             title = request.POST.get("title")
             description = request.POST.get('description')
             release_date = request.POST.get("release_date")
-            poster = request.FILES.get('poster')                   
-            movie = Movies(title = title,description = description, release_date = release_date,poster = poster)
+            rating = request.POST.get("rating")
+            language = request.POST.get("language")
+            duration = request.POST.get("duration")
+            poster = request.FILES.get('poster')   
+            poster = poster if poster else None                
+            movie = Movies(title = title,description = description, release_date = release_date,poster = poster, rating = rating, duration = duration,language = language)
             movie.save()
             return JsonResponse({'message':"Movie Added"},status = 200)
     
 @login_required
-@ensure_csrf_cookie
+#ensure_csrf_cookie
 def movie_detail(request,id):
     if request.method == 'GET':
         try :
@@ -56,7 +64,7 @@ def movie_detail(request,id):
     
     elif request.method == 'PUT':
             if not request.user.is_staff:
-                return JsonResponse({"message" : "Audience cannot ADD movies"})
+                return JsonResponse({"message" : "You don't have access to update movies"})
             try:
                 data = json.loads(request.body)
                 title = data.get("title")
@@ -69,7 +77,7 @@ def movie_detail(request,id):
     
     elif request.method == 'PATCH':
         if not request.user.is_staff:
-            return JsonResponse({"message" : "Audience cannot ADD movies"})
+            return JsonResponse({"message" : "You don't have access to update movies"})
         try:
             data = json.loads(request.body)
             title = data.get("title")
@@ -82,7 +90,7 @@ def movie_detail(request,id):
     
     elif request.method == "DELETE":
           if not request.user.is_staff:
-            return JsonResponse({"message" : "Audience cannot ADD movies"})
+            return JsonResponse({"message" : "You don't have access to delete movies"})
           movie = Movies.objects.filter(id=id).values().first()
           Movies.objects.filter(id=id).delete()
           return JsonResponse({"message" : movie})

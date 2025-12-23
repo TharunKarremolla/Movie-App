@@ -10,6 +10,7 @@ urlpatterns = [
     path("auth/",include("users.urls")),
     path("movies/",include("movies.urls")),
     path("theaters/",include("theaters.urls")),
+     path("shows/",include("Show.urls")),
     
     
     

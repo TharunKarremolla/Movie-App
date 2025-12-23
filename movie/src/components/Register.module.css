@@ -1,0 +1,45 @@
+
+
+.accDiv{
+    width: 600px;
+    margin: 50px auto;
+    background-color: #ffffff;
+     box-shadow: 0 0 0 1px rgba(140, 140, 140, 0.2), 
+            0 2px 3px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    text-align: center;
+  
+}
+
+.inputs{
+    padding: 15px ;
+
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    width: 50%;
+}
+
+.submitBtn {
+    color: white;
+    background-color: #0a66c2;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+
+}
+
+.submitBtn:hover{
+    background-color:#004182; 
+}
+
+.checkbox{
+    padding-bottom: 10px;    
+    margin-top: 10px;
+ 
+}

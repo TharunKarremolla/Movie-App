@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from .views import home ,theater_view,theater_details
+from .views import theater_view,theater_details
 
 urlpatterns = [
    
