@@ -5,13 +5,13 @@ from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
 import json
 
 
-def show_times(request):
-
+def movies_by_theater(request,id):
+    
 
     if request.method == "GET":
         # print(request.)
         
-        shows = list(Show.objects.all().values())
+        shows = list(Show.objects.filter(movie=id).values())
         
         return JsonResponse({"shows": shows})
     
