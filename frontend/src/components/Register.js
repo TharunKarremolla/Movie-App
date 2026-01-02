@@ -23,7 +23,7 @@ export default function Register({ children }){
 
     const handSubmit = async () => {
         try {
-        const res = await axios.post(`${API_URL}/auth/register/`,
+        const res = await axios.post(`${API_URL}auth/register/`,
             {username,email,password},
             {
                 withCredentials : true,
@@ -41,7 +41,7 @@ export default function Register({ children }){
 
      const getCsrf = async () => {
         try {
-        const res = await axios.get(`${API_URL}/auth/`)     
+        const res = await axios.get(`${API_URL}auth/`)     
        
     }
     catch(error){

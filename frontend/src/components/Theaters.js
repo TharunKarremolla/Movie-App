@@ -1,39 +1,26 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useNavigate, useLocation} from "react-router-dom";
-import styles from './Register.module.css';
-import { Link } from "react-router-dom";
 
 
 export default function Theaters(){
-     const API_URL = process.env.REACT_APP_API_URL;
-
+    const API_URL = process.env.REACT_APP_API_URL;
     const { state } = useLocation();
-
-
-    
-     const [theaters,setTheaters] = useState([])
-     const navigate = useNavigate()
-
-
+    const [time,setTime] = useState()
+    const [theaters,setTheaters] = useState([])
+    const navigate = useNavigate()
 
     const getTheaters = async() => {
-  const res = await axios.get(`${API_URL}/theaters/`)
-  setTheaters(res.data.message)
-
-    }
+  const res = await axios.get(`${API_URL}shows/`,{"id" : state.id})
+  setTheaters(res.data.data)
+  setTime(res.data.time)
    
+    }
+
   
 useEffect(() => {
   getTheaters();
 },[])
-
-//setMovies(res.data.data)
-// setCurrentUser(res.data.current_user)
-
-
-
     return (
         <div>
  <h1>Theaters</h1>

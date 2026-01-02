@@ -7,28 +7,40 @@ from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from .models import Movies
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
+from django.utils.timezone import now
+from django.core.cache import cache
+cache.clear()
 
 
-@ensure_csrf_cookie
 @login_required
 def movies_view(request):
 
     if request.method == 'GET':
-          movies = Movies.objects.all()
-          
-          result = []
-          for movie in movies:              
-                result.append({
-                      "id" : movie.id,
-                      "title" : movie.title,
-                      "description" : movie.description,
-                      "poster" : request.build_absolute_uri(movie.poster.url) if movie.poster else None,
-                      "release_date" : movie.release_date,
-                      "rating": movie.rating,
-                      "language" : movie.language,
-                      "duration" : movie.duration
-                })
-          return JsonResponse({"data" : result } )
+        cache_key = "movies:list"
+        cached_response = cache.get(cache_key)
+        
+
+        if cached_response:
+            return JsonResponse({'data' :cached_response},safe=False)
+        movies = Movies.objects.all()
+        result = []
+        for movie in movies:              
+            result.append({
+                    "id" : movie.id,
+                    "title" : movie.title,
+                    "description" : movie.description,
+                    "poster" : request.build_absolute_uri(movie.poster.url) if movie.poster else None,
+                    "release_date" : movie.release_date,
+                    "rating": movie.rating,
+                    "language" : movie.language,
+                    "duration" : movie.duration
+            })
+        cache.set(cache_key,result,300)
+    
+        
+        return JsonResponse({"data" : result,"time":now() } )
     
     elif request.method == 'POST':    
             if not request.user.is_staff:

@@ -58,6 +58,13 @@ INSTALLED_APPS = [
     'corsheaders'
 ]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-local-cache",
+    }
+}
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -137,4 +144,4 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-LOGIN_URL = "/auth/login/"
+LOGIN_URL = "/api/auth/login/"

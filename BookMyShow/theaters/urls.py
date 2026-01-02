@@ -7,5 +7,5 @@ urlpatterns = [
    
 
     path("",theater_view,name='theater_view'),
-    path("<int:id>",theater_details,name='theater_details')
+    path("<int:id>/",theater_details,name='theater_details')
 ]    

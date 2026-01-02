@@ -19,19 +19,19 @@ export default function Theater(){
     
 
     const getTheater = async() => {
-  const res = await axios.get(`${API_URL}/theaters/${params.id}`)
-  setTheater(res.data.message)
+  const res = await axios.get(`${API_URL}theaters/${params.id}`)
+  setTheater(res.data.data)
 
     }
 
      const getShows = async() => {
-  const res = await axios.get(`${API_URL}/shows/`)
+  const res = await axios.get(`${API_URL}shows/`)
     setShows(res.data.shows)
 
     }
 
 const getTickets = async() =>{
-  const res = await axios.post(`${API_URL}/bookings/`,{show : selectedShow ,total_tickets : tickets},{
+  const res = await axios.post(`${API_URL}bookings/`,{show : selectedShow ,total_tickets : tickets},{
     withCredentials : true,
     headers : {
       "Content-Type" :  "application/json",
@@ -46,10 +46,6 @@ useEffect(() => {
   getTheater();
   getShows();
 },[])
-
-//setMovies(res.data.data)
-// setCurrentUser(res.data.current_user)
-
 
 
     return (

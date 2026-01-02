@@ -6,11 +6,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("bookings/",include("bookings.urls")),
-    path("auth/",include("users.urls")),
-    path("movies/",include("movies.urls")),
-    path("theaters/",include("theaters.urls")),
-     path("shows/",include("Show.urls")),
+
+    path("api/bookings/",include("bookings.urls")),
+    path("api/auth/",include("users.urls")),
+    path("api/movies/",include("movies.urls")),
+    path("api/theaters/",include("theaters.urls")),
+     path("api/shows/",include("Show.urls")),
     
     
     

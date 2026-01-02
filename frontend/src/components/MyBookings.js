@@ -17,7 +17,7 @@ export default function MyBookings(){
     const myBookings = async() => {
 
         try{
-  const res = await axios.get(`${API_URL}/bookings/`)
+  const res = await axios.get(`${API_URL}bookings/`)
   setTickets(res.data.message)
         }
         catch(error){

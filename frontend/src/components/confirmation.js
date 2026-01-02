@@ -12,7 +12,7 @@ export default function Confirmation(){
 
        const myBookings = async() => {
         try{
-  const res = await axios.get(`${API_URL}/bookings/`)
+  const res = await axios.get(`${API_URL}bookings/`)
       
         setData(res.data.message[0])
         }
