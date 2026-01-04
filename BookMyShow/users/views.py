@@ -7,6 +7,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
 from django.middleware.csrf import get_token
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
 
 
 @ensure_csrf_cookie
@@ -26,9 +27,9 @@ def login_user(request):
         if request.method == "POST":
             try:
                 data = json.loads(request.body)
-                username = data.get("email")
+                username = data.get("username")
                 password = data.get('password')
-                print(username,password)
+                
             except:
                   return JsonResponse({'error':"Invalid"},status = 401)
 
@@ -55,4 +56,4 @@ def register_user(request):
             return JsonResponse({"message" : f"Created User {user.username}"})
 
        
-        return HttpResponse("hello woel")
+        return HttpResponse("Invalid HTTP method")

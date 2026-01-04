@@ -18,7 +18,7 @@ export default function Login({children}){
    
      
         try {
-                const res = await axios.post(`${API_URL}auth/login/`,{email, password},{
+                const res = await axios.post(`${API_URL}auth/login/`,{'username':email, password},{
                     withCredentials : true,
                     headers : {
                         "Content-Type" : "application/json",
@@ -44,7 +44,7 @@ export default function Login({children}){
                 <input className={styles.inputs} type="password" placeholder="password"  value={password}  onChange={(e) => setPassword(e.target.value) } /><br></br>
                    {Error && <p className={styles.error}>{Error}</p>}
                 <button className = {styles.submitBtn} onClick={handleLogin}>Sign in</button><br></br><br></br>
-                <span>Doesn't have Account ?</span>&nbsp;<Link to="/Account">Sign Up</Link>
+                <span>Doesn't have Account ?</span>&nbsp;<Link to="/">Sign Up</Link>
             </div>
         </div>
     )

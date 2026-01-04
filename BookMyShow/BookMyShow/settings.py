@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'movies',
     'bookings',
     "Show",
+    "rest_framework",
     'corsheaders'
 ]
 

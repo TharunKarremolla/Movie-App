@@ -11,10 +11,11 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from django.utils.timezone import now
 from django.core.cache import cache
-cache.clear()
+from rest_framework.decorators import api_view
 
 
 @login_required
+@api_view(['GET','POST'])
 def movies_view(request):
 
     if request.method == 'GET':
@@ -25,6 +26,7 @@ def movies_view(request):
         if cached_response:
             return JsonResponse({'data' :cached_response},safe=False)
         movies = Movies.objects.all()
+        print(movies)
         result = []
         for movie in movies:              
             result.append({

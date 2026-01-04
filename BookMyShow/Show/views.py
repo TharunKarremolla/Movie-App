@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from .models import Show
+
+
 from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
 import json
 
@@ -9,11 +11,22 @@ def movies_by_theater(request,id):
     
 
     if request.method == "GET":
-        # print(request.)
         
-        shows = list(Show.objects.filter(movie=id).values())
+        show = Show.objects.filter(movie=id).first()
+        title = show.movie.title
         
-        return JsonResponse({"shows": shows})
+        shows = Show.objects.select_related('theater').filter(movie=id)
+        result = []
+        timings = {}
+        for show in shows:
+            if show.theater.name in timings:
+                timings[show.theater.name].append(show.start_time)
+            else:
+                 timings[show.theater.name] = [show.start_time]
+        print(timings)
+       
+        
+        return JsonResponse({'timings' : timings, 'title' : title})
     
     
     elif request.method == 'POST':    

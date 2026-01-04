@@ -22,7 +22,7 @@ function App() {
         <Route path='/theaters/:id' element={<Theater></Theater>}></Route>
         <Route path='/bookings' element={<Confirmation></Confirmation>}></Route>
          <Route path='/mybookings' element={<MyBookings></MyBookings>}></Route>
-           <Route path='/movies/:id/theaters' element={<Shows></Shows>}></Route>
+           <Route path='/movies/:movieId/theaters' element={<Shows></Shows>}></Route>
       </Routes>
     </Router>
       {/* <h1>React</h1> */}

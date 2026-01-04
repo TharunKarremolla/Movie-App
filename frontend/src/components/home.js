@@ -18,7 +18,7 @@ const getMovies = async() => {
   const res = await axios.get(`${API_URL}movies/`)
 setMovies(res.data.data)
 setTime(res.data.time)
-// console.log(res.data.time)
+console.log(res.data)
 }
 
 const handleLogout = async() => {
@@ -50,10 +50,10 @@ useEffect(() => {
        <ul>
         {movies.map((movie) => (
             <div key={movie.id}>
-            <h3>title : {movie.title}</h3>
-            <p>description : {movie.description}</p>
-              <p>language : {movie.language}</p>
-                <img src={movie.poster}></img>
+            <h3>Title : {movie.title}</h3>
+            <p>Description : {movie.description}</p>
+              <p>Language : {movie.language}</p>
+                <img width={250} height={200} src={movie.poster}></img>
             <p>rating : {movie.rating}</p>
             <button onClick={() => navigate(`/movies/${movie.id}/theaters`, {state : {id: movie.id,movie_name : movie.title}})} >Book tickets</button>
             </div>
