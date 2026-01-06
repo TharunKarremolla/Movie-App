@@ -18,6 +18,7 @@ def bookings_view(request):
         if not booking:
               return JsonResponse({"Error" : f"No Bookings are made"})
         data = []
+        
         for item in booking:
             data.append({
                 "booking_id" : item.id,
@@ -31,12 +32,13 @@ def bookings_view(request):
     elif request.method == 'POST':    
             data = json.loads(request.body)  
             print(data)
-            # user_id = request.user
-            # total_tickets = data.get('total_tickets')
-            # show = data.get('show')
-            # booking = Bookings(show_id = show, user = user_id,total_tickets = total_tickets)
-            # booking.save()
-            # return JsonResponse({'message':"New Bookings Created",'id' : booking.id},status = 200)
+            user_id = request.user
+            total_tickets = data.get('total_tickets')
+            show = data.get('show')
+            amount = data.get('Amount')
+            booking = Bookings(show_id = show, user = user_id,total_tickets = total_tickets,total_amount = amount)
+            booking.save()
+            return JsonResponse({'message':"New Bookings Created" },status = 200)
     
     return JsonResponse({'message':"Invalid Method"})
     

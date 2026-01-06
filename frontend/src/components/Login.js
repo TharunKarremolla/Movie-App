@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
@@ -33,6 +33,21 @@ export default function Login({children}){
             console.log("error : ",error.response.data.error)
         }
     }
+
+    
+     const getCsrf = async () => {
+        try {
+        const res = await axios.get(`${API_URL}auth/`)         
+    }
+    catch(error){
+        console.log("error occurred : ",error)  
+    }
+    }
+
+    useEffect(()=> {
+        getCsrf();
+},[])
+
 
     return (
         <div className={styles.logDiv}>

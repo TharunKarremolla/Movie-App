@@ -6,6 +6,9 @@ class Theater(models.Model):
     location = models.CharField(max_length=100,null=True)
     # screens = models.IntegerField(default=None)
     capacity = models.IntegerField(default=None)
+
+    class Meta:
+        db_table = "theaters"
     
 
     def __str__(self):

@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
 
-
 @ensure_csrf_cookie
 def home(request):       
         return JsonResponse({"csrftoken" : 'get_token(request)' })

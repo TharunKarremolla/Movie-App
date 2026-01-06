@@ -10,7 +10,11 @@ class Show(models.Model):
     price = models.IntegerField()
     start_time = models.TimeField()
     #name = models.CharField(default="name")
+    show_date = models.DateField(auto_now_add=True,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "Show"
+    
+    class Meta:
+        db_table = "shows"

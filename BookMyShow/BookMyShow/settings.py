@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from  datetime import timedelta
 from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,10 +20,7 @@ ALLOWED_HOSTS = [
 
 CORS_ALLOWED_ORIGINS = [
   'http://127.0.0.1:3000',
-  'http://localhost:3000'
-  
-
-     
+  'http://localhost:3000'  
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -93,6 +91,20 @@ TEMPLATES = [
         },
     },
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 
 WSGI_APPLICATION = 'BookMyShow.wsgi.application'
 

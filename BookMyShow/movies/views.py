@@ -3,28 +3,29 @@ from django.urls import reverse
 from django.http  import HttpResponse,JsonResponse
 import json
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
-from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from .models import Movies
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 from django.utils.timezone import now
 from django.core.cache import cache
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAdminUser,IsAuthenticated
 
 
-@login_required
+
+
 @api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
 def movies_view(request):
 
     if request.method == 'GET':
-        cache_key = "movies:list"
-        cached_response = cache.get(cache_key)
+        # cache_key = "movies:list"
+        # cached_response = cache.get(cache_key)
         
 
-        if cached_response:
-            return JsonResponse({'data' :cached_response},safe=False)
+        # if cached_response:
+        #     return JsonResponse({'data' :cached_response},safe=False)
         movies = Movies.objects.all()
         print(movies)
         result = []
@@ -39,7 +40,7 @@ def movies_view(request):
                     "language" : movie.language,
                     "duration" : movie.duration
             })
-        cache.set(cache_key,result,300)
+        # cache.set(cache_key,result,300)
     
         
         return JsonResponse({"data" : result,"time":now() } )
@@ -59,8 +60,8 @@ def movies_view(request):
             movie.save()
             return JsonResponse({'message':"Movie Added"},status = 200)
     
-@login_required
-#ensure_csrf_cookie
+@api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
 def movie_detail(request,id):
     if request.method == 'GET':
         try :

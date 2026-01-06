@@ -12,8 +12,6 @@ export default function Home( {user}) {
     const [time,setTime] = useState()
     const navigate = useNavigate();
 
- 
-
 const getMovies = async() => {
   const res = await axios.get(`${API_URL}movies/`)
 setMovies(res.data.data)
@@ -34,8 +32,6 @@ const handleLogout = async() => {
 
 navigate('/login')
 }
-
-
 
 useEffect(() => {
   getMovies();

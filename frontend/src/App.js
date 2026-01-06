@@ -9,6 +9,8 @@ import Theater from './components/Theater';
 import Confirmation from './components/confirmation';
 import MyBookings from './components/MyBookings';
 import Shows from './components/shows';
+import Billing from './components/billing';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path='/bookings' element={<Confirmation></Confirmation>}></Route>
          <Route path='/mybookings' element={<MyBookings></MyBookings>}></Route>
            <Route path='/movies/:movieId/theaters' element={<Shows></Shows>}></Route>
+            <Route path='/billing' element={<Billing></Billing>}></Route>
       </Routes>
     </Router>
       {/* <h1>React</h1> */}

@@ -1,0 +1,48 @@
+// import { Navigate } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+
+// axios.defaults.withCredentials = true;
+
+
+// export default function ProtectedRoute({ children }) {
+//     const API_URL = process.env.REACT_APP_API_URL;
+  
+// const token = localStorage.getItem("token");
+//   const [authData, setAuthData] = useState({isAuth : null, user : null});
+  
+//   console.log("authdata : ",authData)
+//   useEffect(() => {
+//     const verifyUser = async () => {
+//       try {
+//         const res = await axios.get(
+//           `${API_URL}verify/",
+//           { withCredentials: true,
+//             headers : {
+//                'Authorization' : `Bearer ${token}`
+//             }
+//            },
+         
+//         );
+
+//         if (res.data.authenticated) {
+//           setAuthData({isAuth : true, user : res.data.user});
+//           console.log("Verify response1:",  res.data);
+
+//         } else {
+//           setAuthData({isAuth : false, user : res.data});
+//         }
+//       } catch (error) {
+//         setAuthData({isAuth : false, user : null}); // 401 or network error → not authenticated
+//       }
+//     };
+
+//     verifyUser();
+//   }, []);
+
+//   if (authData.isAuth === null) {
+//     return <h1 style={{ 'color': '#0077B5','marginLeft' : '43%', 'marginTop' : '20%'}}>LinkedIn...</h1>; // loading screen
+//   }
+
+//   return authData.isAuth ? React.cloneElement(children, {user : authData.user }) : <Navigate to="/Login" replace />;
+// }

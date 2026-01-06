@@ -15,8 +15,12 @@ class Bookings(models.Model):
     total_tickets =  models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     show  = models.ForeignKey(Show,on_delete=models.CASCADE)
+    total_amount = models.IntegerField(default=0)
     #status = models.CharField(max_length=50, choices=STATUS_CHOICES,default=None)
     #seats = models.ForeignKey(Seat,on_delete=models.CASCADE,default=None)
+
+    class Meta:
+        db_table = 'bookings'
     
     
 

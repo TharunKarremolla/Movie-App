@@ -10,7 +10,12 @@ class Movies(models.Model):
     language = models.CharField(max_length=100,null=False,blank=False,default=None)
     duration = models.DecimalField(max_digits=3,decimal_places=1,null=True,default=None)
 
+
+    class Meta:
+        db_table = 'movies'
+
     def __str__(self):
         return self.title
+    
     
 

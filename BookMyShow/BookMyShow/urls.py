@@ -4,6 +4,8 @@ from django.urls import path,include
 from django.conf import  settings
 from django.conf.urls.static import static
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -11,7 +13,8 @@ urlpatterns = [
     path("api/auth/",include("users.urls")),
     path("api/movies/",include("movies.urls")),
     path("api/theaters/",include("theaters.urls")),
-     path("api/shows/",include("Show.urls")),
+    path("api/shows/",include("Show.urls")),
+ 
     
     
     

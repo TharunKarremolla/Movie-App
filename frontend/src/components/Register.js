@@ -38,7 +38,6 @@ export default function Register({ children }){
         console.log("error occurred : ",error)
     }
     }
-
      const getCsrf = async () => {
         try {
         const res = await axios.get(`${API_URL}auth/`)     
@@ -48,13 +47,9 @@ export default function Register({ children }){
         console.log("error occurred : ",error)  
     }
     }
-
     useEffect(()=> {
         getCsrf();
 },[])
-
-  
-
 
     return (
         <div className={styles.accDiv}>
@@ -67,9 +62,6 @@ export default function Register({ children }){
                { valid_email && <span style={{'color' : 'red'}}>{valid_email}</span>}
                 <input  style={{'marginBottom' : valid_password ? '10px' : '20px'}} className={styles.inputs} type="password" placeholder="password"  value={password}  onChange={(e) => setPassword(e.target.value) } /><br></br>
                 { valid_password && <span style={{'color' : 'red','marginBottom' : '100px'}}>{valid_password}</span>}
-               
-               
-        
                 <button className={styles.submitBtn} onClick={handSubmit} disabled={!username || !email || !password}>Submit</button>
                 <br></br><br></br><span>Already have an Account? </span>&nbsp;<Link to="/Login">Sign In</Link>
             </div>

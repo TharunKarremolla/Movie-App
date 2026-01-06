@@ -1,18 +1,11 @@
 import { useState,useEffect } from "react";
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import { useNavigate } from "react-router-dom";
-import styles from "./Login.module.css";
-import { Link } from "react-router-dom";
 
 axios.defaults.withCredentials = true; 
 
 export default function MyBookings(){   
-       const API_URL = process.env.REACT_APP_API_URL;
-
+    const API_URL = process.env.REACT_APP_API_URL;
     const [Tickets,setTickets] = useState([])
-     const navigate = useNavigate()
-
 
     const myBookings = async() => {
 
@@ -23,10 +16,7 @@ export default function MyBookings(){
         catch(error){
             console.log(error.data)
         }
-
-
     }
-   
 
 useEffect(() => {
   myBookings();
@@ -43,8 +33,7 @@ useEffect(() => {
             <p>Show : {ticket.show}</p>
              <p>Tickets : {ticket.total_tickets}</p>
               
-          
-            {/* <button onClick={() => navigate(`/theaters/${theater.id}`,{ state : { id : state.id,movie_name : state.movie_name }})} >Show Timing</button> */}
+        
             </div>
         
         ))}

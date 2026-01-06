@@ -1,29 +1,30 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from .models import Show
-
-
-from django.views.decorators.csrf import ensure_csrf_cookie,csrf_exempt
+from django.contrib.auth.decorators import login_required
 import json
 
-
+@login_required
 def movies_by_theater(request,id):
     
 
     if request.method == "GET":
         
-        show = Show.objects.filter(movie=id).first()
-        title = show.movie.title
+        # show = Show.objects.filter(movie=id).first()
+        # title = show.movie.title
         
-        shows = Show.objects.select_related('theater').filter(movie=id)
+        shows = Show.objects.select_related('theater','movie').filter(movie=id).order_by('start_time')
+
+        if not shows.exists():
+            return JsonResponse({'timings': {}, 'title': None})
+        title = shows.first().movie.title
         result = []
         timings = {}
         for show in shows:
-            if show.theater.name in timings:
-                timings[show.theater.name].append(show.start_time)
-            else:
-                 timings[show.theater.name] = [show.start_time]
-        print(timings)
+            theater_name = show.theater.name
+            if  theater_name not in timings:
+                timings[theater_name]= []
+            timings[theater_name].append({'id' : show.id, 'time' : show.start_time.strftime("%H:%M") ,"price" : show.price})
        
         
         return JsonResponse({'timings' : timings, 'title' : title})
