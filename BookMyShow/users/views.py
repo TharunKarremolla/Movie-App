@@ -8,37 +8,56 @@ from django.middleware.csrf import get_token
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({"message": "Logged out successfully"})
+        except Exception:
+            return Response({"error": "Invalid token"}, status=400)
+
 
 @ensure_csrf_cookie
 def home(request):       
         return JsonResponse({"csrftoken" : 'get_token(request)' })
 
 
-def logout_user(request):
-    if request.user.id:
+# def logout_user(request):
+#     print(request.user)
+#     if request.user.id:
             
-        logout(request)
-        return JsonResponse({"Message" : 'User Logged Out' })
-    return JsonResponse({"Message" : 'User Already Logged Out' })
+#         logout(request)
+#         return JsonResponse({"Message" : 'User Logged Out' })
+#     return JsonResponse({"Message" : 'User Already Logged Out' })
 
 
-def login_user(request):
-        if request.method == "POST":
-            try:
-                data = json.loads(request.body)
-                username = data.get("username")
-                password = data.get('password')
+# def login_user(request):
+#         print('Login method')
+#         if request.method == "POST":
+#             try:
+#                 data = json.loads(request.body)
+#                 username = data.get("username")
+#                 password = data.get('password')
                 
-            except:
-                  return JsonResponse({'error':"Invalid"},status = 401)
+#             except:
+#                   return JsonResponse({'error':"Invalid"},status = 401)
 
-            user = authenticate(username = username,password= password)
+#             user = authenticate(username = username,password= password)
 
-            if user is None:
-                   return JsonResponse({'error':"User doesn't exist"},status = 401)
-            login(request,user)
-            return JsonResponse({'message':"User Logged In"},status = 200)
-        return JsonResponse({'error':"User is not Logged In"},status = 401)        
+#             if user is None:
+#                    return JsonResponse({'error':"User doesn't exist"},status = 401)
+#             login(request,user)
+#             return JsonResponse({'message':"User Logged In"},status = 200)
+#         return JsonResponse({'error':"User is not Logged In"},status = 401)        
        
 
 def register_user(request):

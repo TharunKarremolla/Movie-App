@@ -13,8 +13,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser,IsAuthenticated
 
 
-
-
 @api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def movies_view(request):
